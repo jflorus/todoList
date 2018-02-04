@@ -22,13 +22,16 @@ public class ListMaster {
 	// write your code here
         //TestPrintGradeRange();
         //RunPrintGradeRange();
-        System.out.println("Select 1 for Add \nSelect 2 For Show \nSelect 3 for Clear");
+        System.out.println("Select 1 for Add \nSelect 2 For Show \nSelect 3 for Clear \nSelect 4 for Delete");
 
         Scanner selection = new Scanner(System.in);
         while (selection.hasNextLine()) {
-            int option = Integer.parseInt(selection.nextLine());
+            int option = -1;
+            try {
+                option = Integer.parseInt(selection.nextLine());
+            }catch (NumberFormatException nfe){}
             ManageTodoList(option, todoitems);
-            System.out.println("Select 1 for Add \nSelect 2 For Show \nSelect 3 for Clear");
+            System.out.println("Select 1 for Add \nSelect 2 For Show \nSelect 3 for Clear \nSelect 4 for Delete");
         }
 
 
@@ -52,6 +55,9 @@ public class ListMaster {
             case (3):
                 clearlist(todoItems);
                 break;
+            case (4):
+                deleteitem(todoItems);
+                break;
             default:
                 System.out.println ("Error");
         }
@@ -74,13 +80,33 @@ public class ListMaster {
     }
 
     public static void showlist (List <String> todoItems) {
+        int listNumber = 1;
         for(String item:todoItems) {
-            System.out.println(item);
+            System.out.println(listNumber + ": " + item);
+            listNumber++;
         }
     }
 
     public static void clearlist (List <String> todoItems) {
+        todoItems.clear();
+    }
 
+    public static  void deleteitem (List <String> todoItems){
+        showlist(todoItems);
+        System.out.println("What item do you want to delete:");
+        Scanner sc = new Scanner(System.in);
+        int option = -1;
+        try {
+            option = Integer.parseInt(sc.nextLine());
+        }catch (NumberFormatException nfe){
+
+        }
+        if (option > 0 && option <= todoItems.size()) {
+            todoItems.remove(option - 1);
+        }
+        else{
+            System.out.println("Error: Invalid index");
+        }
     }
 
     private static void RunPrintGradeRange() {
